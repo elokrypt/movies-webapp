@@ -1,0 +1,64 @@
+{% extends "base.jinja" %}
+{% block content %}
+<div class="section">
+  <form class="box" autocomplete="off" action="/login" method="POST">
+    <div class="field">
+      <label class="label">Username:</label>
+      <div class="control">
+        <input class="input is-info is-small" type="text" id="user_name" name="user_name" required>
+      </div>
+    </div>
+    <div id="user_name_warning">
+    </div>
+    <div class="field">
+      <label class="label">Password:</label>
+      <div class="control">
+        <input class="input is-info is-small" type="password" id="password" name="password" required>
+      </div>
+    </div>
+    <div class="control">
+      <input class="button is-info is-small" type="submit" value="Login">
+    </div>
+  </form>
+  {% if error is defined and error %}
+  <div class="notification is-danger is-small">
+    <p class="title is-6">{{ error }}</p>
+  </div>
+  {% endif %}
+</div>
+{% if users is defined and users %}
+<script>
+  var user_names = [
+{% for user in users %}
+  {{ user.name }},
+{% endfor %}
+];
+function validateInput(evt) {
+  let warnElem = document.getElementById("user_name_warning");
+  if(user_names.includes(evt.target.value)) {
+    evt.target.classList.remove("is-info", "is-warning");
+    evt.target.classList.add("is-success");
+  } else {
+    if(evt.target.value.length > 0) {
+      evt.target.classList.remove("is-info", "is-success");
+      evt.target.classList.add("is-warning");
+      warnElem.innerHTML = `
+    <div class="notification is-warning is-small">
+      <p class="subtitle is-6">Invalid Username !</p>
+    </div>
+`;  
+    } else {
+      evt.target.classList.remove("is-info", "is-success");
+      evt.target.classList.add("is-info");
+      warnElem.innerHTML = ""
+    }
+  }
+}
+
+(function(){
+  document.getElementById("user_name").addEventListener("keyup", validateInput);
+})();
+
+</script>
+{% endif %}
+{% endblock %}

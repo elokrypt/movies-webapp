@@ -1,0 +1,44 @@
+{% extends "base.jinja" %}
+{% block content %}
+
+<input class="input is-info" type="text" id="search" placeholder="Search for a movie..." title="Type a keyword">
+{% if movies is defined and movies %}
+<div class="fixed-grid has-6-cols" style="margin: 8px 0 0 0">
+  <div id="movies" class="grid">
+    {% for movie in movies %}
+    <div class="cell">
+      <div class="card">
+        <header class="card-header" style="min-height: 100px;">
+          <p class="card-header-title is-6"> {{ movie.title }}</p>
+          <form action="/delete_movie/{{ movie.id }}" method="post">
+            <input class="input is-danger is-small" type="submit" value="delete">
+          </form>
+        </header>
+        <div class="card-image">
+          <figure class="image is-3by4">
+            <img src="{{ movie.poster }}" alt="{{ movie.title }}" />
+          </figure>
+        </div>
+        <div class="card-content" style="max-height: 128px;overflow-y:scroll;">
+          <div class="content">
+            <p class="subtitle is-6">
+              {{ movie.year }}
+              <small>by {{ movie.director }}</small>
+            </p>
+            <p>{{ movie.plot }}</p>
+          </div>
+        </div>
+        <div class="card-footer">
+          <form class="card-footer-item" action="/update_movie/{{ movie.id }}" method="post">
+            <input class="input is-info is-small" type="number" min="1" max="10" step="0.1" value="{{ movie.rating }}"
+              id="rating" name="rating" required>
+            <input class="input is-info is-small" type="submit" value="update rating">
+          </form>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+{% endblock %}

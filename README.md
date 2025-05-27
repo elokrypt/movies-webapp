@@ -18,3 +18,10 @@ What things you need to install the software and how to install them
 >$ python -m pip install -r requirements.txt
 >$ flask --app ./movies run
 ```
+
+Login with the following credentials, or create a new user using "Register"-button:
+
+```
+User: guest
+Password: guest
+```

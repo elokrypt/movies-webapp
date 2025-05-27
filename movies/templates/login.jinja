@@ -30,7 +30,7 @@
 <script>
   var user_names = [
 {% for user in users %}
-  {{ user.name }},
+  "{{ user.name }}",
 {% endfor %}
 ];
 function validateInput(evt) {

@@ -1,6 +1,7 @@
+bcrypt
+dotenv
 flask
 flask-session
 flask_sqlalchemy
 sqlalchemy
 jinja2
-dotenv
